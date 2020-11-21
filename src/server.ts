@@ -16,8 +16,15 @@ app.get('/', function (_req, res) {
 });
 
 io.on("connection", function (socket: Socket) {
-    const tickerId = socket.handshake.query.tickerId;
-    if(tickerId) {socket.join(tickerId);}
+    console.log("a user connected");
+
+    socket.on('chat message', (msg) => {
+        console.log('message: ' + msg);
+    });
+
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+    });
 });
 
 server.listen(process.env.PORT || 3000, function () {
