@@ -23,7 +23,7 @@ jobs:
     - name: npm install, build, and test
       run: |
         npm install
-          npm run tsc
+        npm run build --if-present
 
     - name: 'Deploy to Azure Web App'
       uses: azure/webapps-deploy@v2
@@ -31,4 +31,4 @@ jobs:
         app-name: 'tiqhub'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_7f8189f4c521404f83d98a7823bad335 }}
-        package: ./dist/
+        package: .
