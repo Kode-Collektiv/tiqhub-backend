@@ -11,5 +11,9 @@ export const TickerSchema = new Schema({
         type: String,
         required: true,
     },
-    history: [TickerMessageSchema]
+    history: [TickerMessageSchema],
+    accessToken: {
+        type: String,
+        required: true
+    }
 });

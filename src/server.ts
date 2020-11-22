@@ -5,11 +5,14 @@ import initDB from './database/Database';
 import { TickerController } from './controllers/TickerController';
 import * as mongoose from 'mongoose';
 import { Ticker, TickerSchema } from './models/Ticker';
+import cors from 'cors';
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const server = http.createServer(app);
+
 const io = new Server(server, {
     cors: {
         origin: "*",
