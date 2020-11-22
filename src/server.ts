@@ -49,7 +49,7 @@ io.on("connection", function (socket: Socket) {
         Ticker.findById(tickerId, (err, ticker: Ticker) => {
             if (ticker) {
                 ticker.history.forEach(msg => {
-                    io.to(tickerId).emit('broadcast', JSON.stringify(msg));
+                    socket.emit('broadcast', JSON.stringify(msg));
                 });
             }
         });
