@@ -1,5 +1,6 @@
 import * as mongoose from 'mongoose';
-import { TickerSchema } from '../models/Ticker';
+import { Ticker, TickerSchema } from '../models/Ticker';
+import { TickerMessage } from '../models/TickerMessageSchema';
 import { Request, Response } from 'express';
 import {sign} from "jsonwebtoken";
 
@@ -64,4 +65,12 @@ export class TickerController {
         });
     }
 
+    public saveTickerMessage(id: string, msg: TickerMessage): void {
+        Ticker.findOneAndUpdate({ _id: id }, { $push: { 'history': msg } },
+            (err, ) => {
+                if (err) {
+                    console.log(err)
+                }
+            });
+    }
 }
