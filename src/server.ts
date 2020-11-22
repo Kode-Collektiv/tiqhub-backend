@@ -16,7 +16,11 @@ app.get('/', function (_req, res) {
 });
 
 io.on("connection", function (socket: Socket) {
-    const tickerId = socket.handshake.query.tickerId;
+
+    const tickerId = Object(socket.handshake.query)["tickerId"];
+
+    console.log(tickerId)
+
     if (tickerId) {
         socket.join(tickerId);
         console.log('received ticker id ' + tickerId)
