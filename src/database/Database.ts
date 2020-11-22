@@ -9,7 +9,8 @@ export default function initDB(): void {
     mongoServer.getUri().then((mongoUri) => {
         const mongooseOpts = {
             useNewUrlParser: true,
-            useUnifiedTopology: true
+            useUnifiedTopology: true,
+            useFindAndModify: false
         };
 
         mongoose.connect(mongoUri, mongooseOpts);

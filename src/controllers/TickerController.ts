@@ -8,48 +8,46 @@ export class TickerController {
 
     public createTicker(req: Request, res: Response): void {
         const ticker = new Ticker(req.body);
-        console.log(req.body);
         ticker.save((err, ticker) => {
             if (err) {
-                res.send(err);
+                res.status(400).send(err);
             }
             res.json(ticker);
         });
     }
 
     public updateTicker(req: Request, res: Response): void {
-        Ticker.findOneAndUpdate({ _id: req.params.contactId }, req.body, { new: true },
+        Ticker.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true },
             (err, ticker) => {
                 if (err) {
-                    res.send(err);
+                    res.status(400).send(err);
                 }
                 res.json(ticker);
             });
     }
 
     public getTickers(req: Request, res: Response): void {
-        console.log(req);
         Ticker.find({}, (err, ticker) => {
             if (err) {
-                res.send(err);
+                res.status(400).send(err);
             }
             res.json(ticker);
         });
     }
 
     public getTicker(req: Request, res: Response): void {
-        Ticker.findById(req.params.contactId, (err, contact) => {
+        Ticker.findById(req.params.id, (err, ticker) => {
             if (err) {
-                res.send(err);
+                res.status(404).send(err);
             }
-            res.json(contact);
+            res.json(ticker);
         });
     }
 
     public deleteTicker(req: Request, res: Response): void {
-        Ticker.remove({ _id: req.params.contactId }, (err, ) => {
+        Ticker.remove({ _id: req.params.id }, (err,) => {
             if (err) {
-                res.send(err);
+                res.status(404).send(err);
             }
             res.json({ message: 'Successfully deleted ticker!' });
         });
