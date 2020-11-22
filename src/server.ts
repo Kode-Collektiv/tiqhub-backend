@@ -1,6 +1,9 @@
 import express, { Request, Response } from 'express';
 import http from 'http';
 import { Socket, Server } from "socket.io";
+import { createAdapter } from 'socket.io-redis';
+// npm i -D @types/redis
+import { RedisClient } from 'redis';
 import initDB from './database/Database';
 import { TickerController } from './controllers/TickerController';
 
@@ -14,6 +17,10 @@ const io = new Server(server, {
         methods: ["GET", "POST"]
     }
 });
+const pubClient = new RedisClient({ host: 'localhost', port: 6379 });
+const subClient = pubClient.duplicate();
+
+io.adapter(createAdapter({ pubClient, subClient }));
 
 initDB();
 const tickerController = new TickerController();
@@ -57,7 +64,7 @@ io.on("connection", function (socket: Socket) {
     });
 
 });
-
-server.listen(process.env.PORT || 3000, function () {
-    console.log('Example app listening on port 3000!');
+const port = process.env.PORT || 3000;
+server.listen(port, function () {
+    console.log('Example app listening on port ' + port);
 });
