@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 export default function initDB(): void {
     mongoose.Promise = Promise;
     if (process.env.MONGO_URI) {
-        console.log("connect to:", process.env.MONGO_URI);
+        console.log("connect to mongo URI from env");
         connectMongo(process.env.MONGO_URI);
     } else {
         console.log("create inMemMongo");
