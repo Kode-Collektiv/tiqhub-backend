@@ -1,0 +1,147 @@
+{
+	"info": {
+		"_postman_id": "b29e29c5-a7ec-4ba3-9b85-300ddbe3ce4a",
+		"name": "tiqhub-backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Query tickers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/tickers",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"tickers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a ticker",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"bundesliga\"\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}/tickers",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"tickers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query ticker by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/tickers/5fba525d5e4c8e2d5a668b5da",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"tickers",
+						"5fba525d5e4c8e2d5a668b5da"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a ticker",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"bundesliga2\"\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}/tickers/5fba53b456c7142e8b9a7859",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"tickers",
+						"5fba53b456c7142e8b9a7859"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a ticker",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/tickers/5fba53b456c7142e8b9a7859",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"tickers",
+						"5fba53b456c7142e8b9a7859"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "913e6ecb-ce93-4a29-a3c1-3b231a2da2f1",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "eb495c3d-bbc5-4556-98ea-a47114b6fa10",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "12aefdd4-deb9-42fc-87f5-b36e88679459",
+			"key": "baseURL",
+			"value": "localhost:3000/api/v1"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
