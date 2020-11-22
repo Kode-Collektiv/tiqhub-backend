@@ -3,6 +3,8 @@ import http from 'http';
 import { Socket, Server } from "socket.io";
 import initDB from './database/Database';
 import { TickerController } from './controllers/TickerController';
+import * as mongoose from 'mongoose';
+import { Ticker, TickerSchema } from './models/Ticker';
 
 const app = express();
 app.use(express.json());
@@ -35,18 +37,25 @@ io.on("connection", function (socket: Socket) {
 
     const tickerId = Object(socket.handshake.query)["tickerId"];
 
-    console.log(tickerId)
-
     if (tickerId) {
         socket.join(tickerId);
-        console.log('received ticker id ' + tickerId)
+        console.log('new client connected to ticker id ' + tickerId);
+
+        // check if history data is available for this ticker and return it
+        const Ticker = mongoose.model('Ticker', TickerSchema);
+        Ticker.findById(tickerId, (err, ticker: Ticker) => {
+            if (ticker) {
+                ticker.history.forEach(msg => {
+                    io.to(tickerId).emit('broadcast', JSON.stringify(msg));
+                });
+            }
+        });
     }
 
     socket.on(tickerId, (broadcast) => {
+        tickerController.saveTickerMessage(tickerId, JSON.parse(broadcast));
         io.to(tickerId).emit('broadcast', broadcast);
     });
-
-    console.log("a user connected");
 
     socket.on('chat message', (msg) => {
         console.log('message: ' + msg);
