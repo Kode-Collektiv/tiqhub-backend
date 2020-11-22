@@ -43,10 +43,9 @@ io.on("connection", function (socket: Socket) {
     }
 
     socket.on(tickerId, (broadcast) => {
+        tickerController.saveTickerMessage(tickerId, JSON.parse(broadcast));
         io.to(tickerId).emit('broadcast', broadcast);
     });
-
-    console.log("a user connected");
 
     socket.on('chat message', (msg) => {
         console.log('message: ' + msg);

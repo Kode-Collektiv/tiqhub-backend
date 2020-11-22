@@ -1,8 +1,15 @@
-import * as mongoose from 'mongoose';
+import { Document, Schema } from 'mongoose';
+import { TickerMessage, TickerMessageSchema } from './TickerMessageSchema';
 
-export const TickerSchema = new mongoose.Schema({
-    name: {
+export interface Ticker extends Document {
+    _id: string;
+    history: [TickerMessage];
+}
+
+export const TickerSchema = new Schema({
+    _id: {
         type: String,
-        required: true
-    }
+        required: true,
+    },
+    history: [TickerMessageSchema]
 });
