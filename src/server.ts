@@ -30,6 +30,16 @@ io.on("connection", function (socket: Socket) {
         io.to(tickerId).emit('broadcast', broadcast);
     });
 
+    console.log("a user connected");
+
+    socket.on('chat message', (msg) => {
+        console.log('message: ' + msg);
+    });
+
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+    });
+
 });
 
 server.listen(process.env.PORT || 3000, function () {
