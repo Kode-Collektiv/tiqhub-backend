@@ -32,6 +32,20 @@ app.route('/api/v1/tickers/:id')
     .delete(tickerController.deleteTicker);
 
 io.on("connection", function (socket: Socket) {
+
+    const tickerId = Object(socket.handshake.query)["tickerId"];
+
+    console.log(tickerId)
+
+    if (tickerId) {
+        socket.join(tickerId);
+        console.log('received ticker id ' + tickerId)
+    }
+
+    socket.on(tickerId, (broadcast) => {
+        io.to(tickerId).emit('broadcast', broadcast);
+    });
+
     console.log("a user connected");
 
     socket.on('chat message', (msg) => {
@@ -41,8 +55,9 @@ io.on("connection", function (socket: Socket) {
     socket.on('disconnect', () => {
         console.log('user disconnected');
     });
+
 });
 
-server.listen(3000, function () {
+server.listen(process.env.PORT || 3000, function () {
     console.log('Example app listening on port 3000!');
 });
