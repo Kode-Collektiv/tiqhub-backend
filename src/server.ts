@@ -23,10 +23,6 @@ const io = new Server(server, {
 initDB();
 const tickerController = new TickerController();
 
-app.get('/', function (req: Request, res: Response) {
-    res.sendFile(__dirname + '/index.html');
-});
-
 app.route('/api/v1/tickers')
     .get(tickerController.getTickers)
     .post(tickerController.createTicker);
@@ -42,7 +38,7 @@ io.on("connection", function (socket: Socket) {
 
     if (tickerId) {
         socket.join(tickerId);
-        console.log('new client connected to ticker id ' + tickerId);
+        console.log(`New user [${socket.id}] connected to ticker [${tickerId}]`);
 
         // check if history data is available for this ticker and return it
         const Ticker = mongoose.model('Ticker', TickerSchema);
@@ -60,12 +56,8 @@ io.on("connection", function (socket: Socket) {
         io.to(tickerId).emit('broadcast', broadcast);
     });
 
-    socket.on('chat message', (msg) => {
-        console.log('message: ' + msg);
-    });
-
     socket.on('disconnect', () => {
-        console.log('user disconnected');
+        console.log(`User [${socket.id}] left ticker [${tickerId}]`);
     });
 
 });
